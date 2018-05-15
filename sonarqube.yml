@@ -1,0 +1,31 @@
+name: sonarqube
+instance_groups:
+- name: sonarqube
+  azs: [z1]
+  instances: 1
+  jobs:
+  - name: sonarqube
+    release: sonarqube-boshrelease
+  networks:
+  - name: default
+  stemcell: default
+  vm_type: default
+
+releases:
+- name: sonarqube-boshrelease
+  version: latest
+
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: latest
+
+update:
+  canaries: 1
+  canary_watch_time: 15000-300000
+  max_in_flight: 1
+  update_watch_time: 15000-300000
+
+variables:
+- name: sonar_mysql_password
+  type: password
