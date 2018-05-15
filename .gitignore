@@ -14,4 +14,3 @@ releases/**/*.tgz
 #*
 tmp
 import.yml
-import.yml*
