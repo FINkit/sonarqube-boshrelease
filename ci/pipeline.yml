@@ -286,8 +286,8 @@ jobs:
       params: { file: final-sonarqube-boshrelease-tarball/sonarqube-boshrelease-v*.tgz }
     - put: github-release
       params: &put-github-release-params
-        name: version/sonarqube.version
-        tag: version/sonarqube.version
+        name: version/version
+        tag: version/version
         tag_prefix: v
         globs:
         - final-sonarqube-boshrelease-tarball/*.tgz
