@@ -1,0 +1,15 @@
+{
+	"groupPermissions": 
+	[
+		{
+			"name":"privileged_user",
+			"description":"A user who can Administer Quality Gates and Profiles, and Create Projects",
+			"permissions":"gateadmin,profileadmin,provisioning"
+		},
+		{
+			"name":"unprivileged_user",
+ 			"description":"A user who can only Administer Quality Gates",
+			"permissions":"gateadmin"
+		}
+	]
+}

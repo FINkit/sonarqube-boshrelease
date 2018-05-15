@@ -1,0 +1,120 @@
+import java.net.URLEncoder
+
+class SonarApiClient
+{
+    static def sonarUrl = '<%= p('sonar.server.url') %>'
+    static def sonarApiUrl = sonarUrl + '/api/'
+
+    static def gitHubUrl = '<%= p('github.server.url') if not defined? p('github.server.url') %>'
+    static def clientSecret = '<%= p('sonar.client.secret') if not defined? p('sonar.client.secret') %>'
+    static def clientId = '<%= p('sonar.client.id') if not defined? p('sonar.client.secret') %>'
+
+    static def username = '<%= p('sonar.admin.username') %>'
+    static def password = '<%= p('sonar.admin.password') %>'
+
+    private static String encode(value) {
+        return URLEncoder.encode(value, 'UTF-8')
+    }
+
+    static def buildSingleValuedKeyPair(String key, String value) {
+        return encode(key) + '=' + encode(value)
+    }
+
+    static def buildMultiValuedKeyPair(String key, Iterator<String> values) {
+        if (!values.hasNext()) {
+            return buildSingleValuedKeyPair(key, values.first)
+        }
+    
+        def keyPair = encode(key) + '=' + encode(values.first)
+
+        values.next
+
+        for (value in values) {
+            keyPair += '&' + encode(key) + '=' + encode(value)
+        }
+    
+        return keyPair
+    }
+
+    static def buildQueryString(Iterator<String> keyValuePairs) {
+        if (!keyValuePairs.hasNext()) {
+            return ''
+        }
+
+        def pair = keyValuePairs.next()
+
+        for (keyValuePair in keyValuePairs) {
+            pair += '&' + keyValuePair
+        }
+
+        return pair
+    }
+
+    private static String generateAuthValue() {
+        return "${username}:${password}".getBytes().encodeBase64().toString()
+    }   
+
+    private static HttpURLConnection openPostConnection(String url) {
+        def connection = new URL(url).openConnection() as HttpURLConnection
+
+        connection.setRequestProperty('Accept', 'application/json')
+        connection.setRequestProperty('Authorization', "Basic ${generateAuthValue()}")
+        connection.setRequestMethod('POST')
+        connection.doOutput = true
+
+        return connection
+    }
+
+    static boolean postQueryString(
+                    String url,
+                    String queryString,
+                    int numberOfTimesToRetry = 60,
+                    int delayBetweenRetriesInMilliseconds = 1000) {
+
+        def finalResponseReceived = false
+
+        while ((!finalResponseReceived) && (numberOfTimesToRetry-- > 0)) {
+
+            def connection
+            def writer
+
+            try {
+                connection = openPostConnection(url)
+                writer = new OutputStreamWriter(connection.outputStream)
+
+                writer.write(queryString)
+                writer.flush()
+
+                def responseCode = connection.responseMessage
+
+                if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
+                    sleep(delayBetweenRetriesInMilliseconds)
+                    println "Waiting ${delayBetweenRetriesInMilliseconds} milliseconds to post to ${url} with " + 
+                            "${numberOfTimesToRetry} retries remaining"
+                } else if (responseCode == HttpURLConnection.HTTP_OK ||
+                           responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
+                    println "Request to ${url} with query string ${queryString} succeeded"
+                    finalResponseReceived = true
+                } else {
+                    println "Request to ${url} with query string ${queryString} failed with status " +
+                            "${responseCode} and response ${connection.responseMessage}"
+                    finalResponseReceived = true
+                }
+            } catch (IOException ioe) {
+                println "Request failed with error: ${ioe}"
+                return false
+            } finally {
+                if (writer != null) writer.close()
+                if (connection != null) connection.disconnect()
+            }
+        }
+
+        if (!finalResponseReceived) {
+            println "Timed out waiting for response from ${url}"
+            return false
+        }
+
+        return true
+    }
+}
+
