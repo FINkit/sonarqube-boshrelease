@@ -184,6 +184,7 @@ jobs:
   - task: bbl-up
     file: cf-deployment-concourse-tasks/bbl-up/task.yml
     input_mapping:
+      bbl-config: bbl-state
       bbl-state: bbl-state
     output_mapping:
       updated-bbl-state: updated-bbl-state
