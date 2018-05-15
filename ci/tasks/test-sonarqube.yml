@@ -1,0 +1,34 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: engineerbetter/pcf-ops
+inputs:
+- name: bbl-state
+- name: sonarqube-boshrelease
+run:
+  path: /bin/bash
+  args:
+  - -c
+  - |
+    pushd bbl-state/bbl-state
+      source <(bbl print-env)
+      JUMPBOX_USER="jumpbox"; export JUMPBOX_USER
+      JUMPBOX_HOST=$(bosh int <(bbl outputs) --path /jumpbox_url | cut -d: -f1); export JUMPBOX_HOST
+      # set up jumpbox ssh tunnel
+      instance_info=$(bosh --json instances -i); export instance_info
+      ip=$(jq -r .Tables[0].Rows[0].ips <<< "$instance_info")
+      # shellcheck disable=SC2029
+      ssh -o StrictHostKeyChecking=no -fNnL "9000:$ip:9000" -i "$JUMPBOX_PRIVATE_KEY" "$JUMPBOX_USER@$JUMPBOX_HOST"
+      trap "pkill ssh" EXIT
+      export SONARQUBE_HOST="http://localhost:9000"
+    popd
+
+    cp -R sonarqube-boshrelease/ci/tests/sonarqubetest /go/src/
+    sleep 10
+
+    pushd /go/src/sonarqubetest
+      go get github.com/DATA-DOG/godog/cmd/godog
+      set -e
+      godog
+    popd

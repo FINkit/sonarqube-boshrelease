@@ -1,0 +1,8 @@
+---
+name: sonarqube
+dependencies: 
+- oraclejdk
+files:
+- sonarqube/sonarqube-6.5.zip
+- sonarqube/sonar-auth-github-plugin-1.3.jar
+
