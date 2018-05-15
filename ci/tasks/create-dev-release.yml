@@ -1,0 +1,18 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: engineerbetter/pcf-ops
+inputs:
+- name: sonarqube-boshrelease
+outputs:
+- name: dev-sonarqube-boshrelease-tarball
+run:
+  path: bash
+  args:
+  - -c
+  - |
+    bosh create-release \
+      --tarball=dev-sonarqube-boshrelease-tarball/dev-release.tgz \
+      --dir=sonarqube-boshrelease \
+      --timestamp-version
