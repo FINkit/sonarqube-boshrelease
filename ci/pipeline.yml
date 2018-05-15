@@ -36,11 +36,6 @@ resources:
     branch: master
     uri: https://github.com/cloudfoundry/bosh-bootloader.git
     tag_filter: "v6.6.4"
-- name: buildstack-deployment
-  type: git
-  source:
-    branch: master
-    uri: https://github.com/FINkit/buildstack-deployment.git
 - name: bosh-deployment
   type: bosh-deployment
 - name: cf-deployment-concourse-tasks
@@ -180,7 +175,6 @@ jobs:
   - aggregate:
     - get: bbl-state
     - get: bosh-bootloader
-    - get: buildstack-deployment
     - get: cf-deployment-concourse-tasks
     - get: concourse-tasks
     - get: sonarqube-boshrelease
@@ -190,12 +184,10 @@ jobs:
   - task: bbl-up
     file: cf-deployment-concourse-tasks/bbl-up/task.yml
     input_mapping:
-      bbl-config: buildstack-deployment
       bbl-state: bbl-state
     output_mapping:
       updated-bbl-state: updated-bbl-state
     params:
-      BBL_CONFIG_DIR: iaas-support/bosh-lite-gcp
       BBL_ENV_NAME: sonarqube-boshrelease
       BBL_GCP_REGION: ((gcp.region))
       BBL_GCP_SERVICE_ACCOUNT_KEY: ((gcp.key))
@@ -216,9 +208,6 @@ jobs:
     - get: bbl-state
       passed:
       - setup-infrastructure
-    - get: buildstack-deployment
-      passed:
-      - setup-infrastructure
     - get: cf-deployment-concourse-tasks
     - get: sonarqube-boshrelease
       passed:
@@ -234,14 +223,12 @@ jobs:
     - do:
       - task: create-sonarqube-bosh-config
         params:
-          BOSH_DEPLOYMENT: &deployment-name buildstack
+          BOSH_DEPLOYMENT: &deployment-name sonarqube
         file: sonarqube-boshrelease/ci/tasks/create-bosh-config.yml
       - put: bosh-deployment # Deploy sonarqube instance
         params:
-          ops_files:
-          - buildstack-deployment/operations/just-sonarqube.yml
           source_file: source/source.yml
-          manifest: buildstack-deployment/buildstack.yml
+          manifest: sonarqube-boshrelease/sonarqube.yml
           releases:
           - dev-sonarqube-boshrelease-tarball/dev-release.tgz
           stemcells:
