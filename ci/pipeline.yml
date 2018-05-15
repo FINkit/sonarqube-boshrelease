@@ -184,11 +184,12 @@ jobs:
   - task: bbl-up
     file: cf-deployment-concourse-tasks/bbl-up/task.yml
     input_mapping:
-      bbl-config: bbl-state
+      bbl-config: sonarqube-boshrelease
       bbl-state: bbl-state
     output_mapping:
       updated-bbl-state: updated-bbl-state
     params:
+      BBL_CONFIG_DIR: terraform
       BBL_ENV_NAME: sonarqube-boshrelease
       BBL_GCP_REGION: ((gcp.region))
       BBL_GCP_SERVICE_ACCOUNT_KEY: ((gcp.key))
