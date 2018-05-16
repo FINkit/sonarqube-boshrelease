@@ -296,7 +296,7 @@ jobs:
       params:
         GITHUB_ACCESS_KEY: ((github_access_key))
         OWNER: finkit
-        REPO: devtools-boshrelease
+        REPO: sonarqube-boshrelease
         VERSION: version/version
         BRANCH: master
         DESCRIPTION: version/version
