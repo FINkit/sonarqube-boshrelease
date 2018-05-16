@@ -44,11 +44,6 @@ resources:
     branch: master
     uri: https://github.com/garethjevans/concourse-tasks.git
     tag_filter: "v1.0"
-- name: devtools-boshrelease
-  type: git
-  source:
-      uri: https://github.com/FINkit/devtools-boshrelease.git
-      branch: master
 - name: sonarqube-boshrelease
   type: git
   source:
@@ -276,7 +271,6 @@ jobs:
       bump: final
   - do: &do-release
     - aggregate:
-      - get: devtools-boshrelease
       - get: sonarqube-boshrelease
         passed: &tests
         - test-sonarqube
@@ -291,16 +285,6 @@ jobs:
         tag_prefix: v
         globs:
         - final-sonarqube-boshrelease-tarball/*.tgz
-    - task: publish-draft-release
-      file: devtools-boshrelease/ci/tasks/publish-draft-release/publish-draft-release.yml
-      params:
-        GITHUB_ACCESS_KEY: ((github_access_key))
-        OWNER: finkit
-        REPO: sonarqube-boshrelease
-        VERSION: version/version
-        VERSION_TAG: v
-        BRANCH: master
-        DESCRIPTION: version/version
   <<: *slack-alert
 
 - name: prerelease-major
