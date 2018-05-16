@@ -298,6 +298,7 @@ jobs:
         OWNER: finkit
         REPO: sonarqube-boshrelease
         VERSION: version/version
+        VERSION_TAG: v
         BRANCH: master
         DESCRIPTION: version/version
   <<: *slack-alert
