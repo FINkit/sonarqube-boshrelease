@@ -192,7 +192,7 @@ jobs:
 
 - name: test-sonarqube
   serial_groups:
-  - tests
+  - bbl
   plan:
   - aggregate: &get-test-resources
     - get: bbl-state
