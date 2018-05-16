@@ -71,10 +71,6 @@ vm_extensions:
 - name: internet-not-required
   cloud_properties:
     ephemeral_external_ip: false
-- name: sonar-pool
-  cloud_properties:
-    ephemeral_external_ip: true
-    backend_service: buildtools-backend-service
 vm_types:
 - name: minimal
 - name: small
