@@ -1,5 +1,5 @@
 ---
-name: sonarqube-boshrelease
+name: sonarqube
 blobstore:
   provider: gcs
   options:
