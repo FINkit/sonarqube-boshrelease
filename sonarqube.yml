@@ -5,14 +5,14 @@ instance_groups:
   instances: 1
   jobs:
   - name: sonarqube
-    release: sonarqube-boshrelease
+    release: sonarqube
   networks:
   - name: default
   stemcell: default
   vm_type: default
 
 releases:
-- name: sonarqube-boshrelease
+- name: sonarqube
   version: latest
 
 stemcells:
