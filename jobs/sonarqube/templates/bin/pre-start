@@ -3,5 +3,20 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
-cp /var/vcap/jobs/sonarqube/config/sonar.properties /var/vcap/packages/sonarqube/conf/sonar.properties
-chown vcap:vcap -R /var/vcap/packages/sonarqube/*
+export HOME="/var/vcap"
+export PACKAGES_PATH="${HOME}/packages/sonarqube/sonarqube"
+export INSTALL_PATH="${HOME}/packages/sonarqube"
+export DOWNLOADED_PLUGINS_TARGET="${INSTALL_PATH}/extensions/downloads"
+
+cd $PACKAGES_PATH
+unzip -o sonarqube*.zip
+
+# TODO Check whether this will ultimately lose data, even when using MySQL
+cp --archive --force sonarqube-6.5/* ${INSTALL_PATH}
+
+mkdir --parents ${DOWNLOADED_PLUGINS_TARGET}
+cp *.jar ${DOWNLOADED_PLUGINS_TARGET}
+
+cp /var/vcap/jobs/sonarqube/config/sonar.properties ${INSTALL_PATH}/conf/sonar.properties
+
+chown vcap:vcap -R ${INSTALL_PATH}/
