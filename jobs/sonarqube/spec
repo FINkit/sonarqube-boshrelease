@@ -23,6 +23,7 @@ templates:
 properties:
   github.server.url:
     description: "URL for the github instance"
+    default: ''
   sonar.admin.password:
     description: "Admin password for the Sonar application"
     default: admin
@@ -31,8 +32,10 @@ properties:
     default: admin
   sonar.client.id:
     description: "Client ID for github integration"
+    default: ''
   sonar.client.secret:
     description: "Client secret for github integration"
+    default: ''
   sonar.server.address:
     description: "Fully qualified address of Sonar server"
     default: 127.0.0.1
