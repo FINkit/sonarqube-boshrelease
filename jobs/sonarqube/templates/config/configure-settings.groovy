@@ -14,7 +14,8 @@ def keySingleValuePairs = [
     new Tuple2('sonar.auth.github.webUrl', gitHubUrl),
 	new Tuple2('sonar.auth.github.clientSecret.secured', SonarApiClient.clientSecret),
     new Tuple2('sonar.auth.github.loginStrategy', 'Same as GitHub login'),
-    new Tuple2('sonar.auth.github.clientId.secured', SonarApiClient.clientId)
+    new Tuple2('sonar.auth.github.clientId.secured', SonarApiClient.clientId),
+    new Tuple2('sonar.auth.github.groupsSync', SonarApiClient.groupsSync)
 ]
 
 def querySucceeded = false
