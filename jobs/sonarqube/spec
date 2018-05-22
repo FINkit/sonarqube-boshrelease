@@ -56,3 +56,6 @@ properties:
   sonar.server.url:
     description: "sonar base URL"
     default: http://127.0.0.1:9000
+  sonar.organisations.list:
+    description: "Comma separated list of GitHub organisations - e.g. FinKit,Fiserv"
+    default: ''
