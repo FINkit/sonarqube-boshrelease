@@ -4,11 +4,15 @@ class SonarApiClient
 {
     static def sonarUrl = '<%= p('sonar.server.url') %>'
     static def sonarApiUrl = sonarUrl + '/api/'
-
-    static def gitHubUrl = '<%= p('github.server.url') if not defined? p('github.server.url') %>'
-    static def clientSecret = '<%= p('sonar.client.secret') if not defined? p('sonar.client.secret') %>'
-    static def clientId = '<%= p('sonar.client.id') if not defined? p('sonar.client.secret') %>'
-
+    <% if defined? p('github.server.url') %>
+    static def gitHubUrl = '<%= p('github.server.url') %>'
+    static def clientSecret = '<%= p('sonar.client.secret') %>'
+    static def clientId = '<%= p('sonar.client.id') %>'
+    <% else %>
+    static def gitHubUrl = ''
+    static def clientSecret = ''
+    static def clientId = ''
+    <% end %>
     static def username = '<%= p('sonar.admin.username') %>'
     static def password = '<%= p('sonar.admin.password') %>'
 
