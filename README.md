@@ -1,4 +1,6 @@
-# BOSH release for Sonarqube
+# BOSH release of Sonarqube
+
+[![Build Status](https://travis-ci.org/FINkit/sonarqube-boshrelease.svg?branch=master)](https://travis-ci.org/FINkit/sonarqube-boshrelease)
 
 ## 1. Overview
 
