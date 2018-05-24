@@ -60,5 +60,5 @@ properties:
     description: "A boolean indicating whether to synchronise the GitHub groups"
     default: 'true'
   sonar.organisations.list:
-    description: "Comma separated list of GitHub organisations - e.g. FinKit,Fiserv"
+    description: "Comma separated list of GitHub organisations - e.g. Other,ANOther"
     default: ''
