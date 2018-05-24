@@ -12,6 +12,11 @@ class SonarApiClient
     static def username = '<%= p('sonar.admin.username') %>'
     static def password = '<%= p('sonar.admin.password') %>'
 
+    static def groupsSync = '<%= p('sonar.groups.sync') %>'
+
+    static def organisations = '<%= p('sonar.organisations.list') %>'
+    static def organisationsList = organisations.tokenize(',')
+
     private static String encode(value) {
         return URLEncoder.encode(value, 'UTF-8')
     }
@@ -22,17 +27,15 @@ class SonarApiClient
 
     static def buildMultiValuedKeyPair(String key, Iterator<String> values) {
         if (!values.hasNext()) {
-            return buildSingleValuedKeyPair(key, values.first)
+            return buildSingleValuedKeyPair(key, values.next())
         }
-    
-        def keyPair = encode(key) + '=' + encode(values.first)
 
-        values.next
+        def keyPair = encode(key) + '=' + encode(values.next())
 
-        for (value in values) {
-            keyPair += '&' + encode(key) + '=' + encode(value)
+        while (values.hasNext()) {
+            keyPair += '&' + encode(key) + '=' + encode(values.next())
         }
-    
+
         return keyPair
     }
 
@@ -85,7 +88,7 @@ class SonarApiClient
                 writer.write(queryString)
                 writer.flush()
 
-                def responseCode = connection.responseMessage
+                def responseCode = connection.responseCode
 
                 if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
                     sleep(delayBetweenRetriesInMilliseconds)
