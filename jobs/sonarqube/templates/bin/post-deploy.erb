@@ -3,7 +3,7 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
-SONARQUBE_USE_GITHUB_AUTH="<%= p('sonarqube.use_github_auth') %>"
+SONARQUBE_USE_GITHUB_AUTH="<%= p('sonar.use_github_auth') %>"
 
 if [ "${SONARQUBE_USE_GITHUB_AUTH}" == "true" ]; then
   export JAVA_HOME="/var/vcap/packages/oraclejdk"
