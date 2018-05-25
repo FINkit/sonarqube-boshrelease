@@ -103,7 +103,7 @@ class SonarApiClient
                 } else {
                     println "Request to ${url} with query string ${queryString} failed with status " +
                             "${responseCode} and response ${connection.responseMessage}"
-                    finalResponseReceived = true
+                    return false
                 }
             } catch (IOException ioe) {
                 println "Request failed with error: ${ioe}"
