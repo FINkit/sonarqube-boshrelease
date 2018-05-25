@@ -56,6 +56,9 @@ properties:
   sonar.server.url:
     description: "sonar base URL"
     default: http://127.0.0.1:9000
+  sonar.use_github_auth:
+    description: "A boolean indicating whether to use GitHub authentication"
+    default: "false"
   sonar.groups.sync:
     description: "A boolean indicating whether to synchronise the GitHub groups"
     default: 'true'
