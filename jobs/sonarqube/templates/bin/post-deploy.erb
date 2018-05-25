@@ -3,13 +3,15 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
-<% if defined? p('github.server.url') %>
-export JAVA_HOME="/var/vcap/packages/oraclejdk"
-export GROOVY_HOME="/var/vcap/packages/groovy"
-export GROOVY="${GROOVY_HOME}/bin/groovy"
+SONARQUBE_USE_GITHUB_AUTH="<%= p('sonarqube.use_github_auth') %>"
 
-cd /var/vcap/jobs/sonarqube/config
+if [ "${SONARQUBE_USE_GITHUB_AUTH}" == "true" ]; then
+  export JAVA_HOME="/var/vcap/packages/oraclejdk"
+  export GROOVY_HOME="/var/vcap/packages/groovy"
+  export GROOVY="${GROOVY_HOME}/bin/groovy"
 
-${GROOVY} configure-settings.groovy
-${GROOVY} configure-groups.groovy
-<% end %>
+  cd /var/vcap/jobs/sonarqube/config
+
+  ${GROOVY} configure-settings.groovy
+  ${GROOVY} configure-groups.groovy
+fi
