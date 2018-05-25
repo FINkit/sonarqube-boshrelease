@@ -2,8 +2,10 @@ import java.net.URLEncoder
 
 class SonarApiClient
 {
+    static def sonarLocalUrl = 'http://<%= p('sonar.server.address') %>:<%= p('sonar.server.port') %>'
+    static def sonarApiUrl = sonarLocalUrl + '/api/'
+
     static def sonarUrl = '<%= p('sonar.server.url') %>'
-    static def sonarApiUrl = sonarUrl + '/api/'
 
     static def gitHubUrl = '<%= p('github.server.url') %>'
     static def clientSecret = '<%= p('sonar.client.secret') %>'
