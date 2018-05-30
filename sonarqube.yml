@@ -6,6 +6,10 @@ instance_groups:
   jobs:
   - name: sonarqube
     release: sonarqube
+    properties:
+      sonar:
+        admin:
+          password: ((sonar_admin_password))
   networks:
   - name: default
   stemcell: default
@@ -27,5 +31,7 @@ update:
   update_watch_time: 15000-300000
 
 variables:
+- name: sonar_admin_password
+  type: password
 - name: sonar_mysql_password
   type: password
