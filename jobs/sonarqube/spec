@@ -26,7 +26,6 @@ properties:
     default: ''
   sonar.admin.password:
     description: "Admin password for the Sonar application"
-    default: admin
   sonar.admin.username:
     description: "Admin username for the Sonar application"
     default: admin
