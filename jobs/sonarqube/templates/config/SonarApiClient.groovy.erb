@@ -100,6 +100,10 @@ class SonarApiClient
                            responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
                     println "Request to ${url} with query string ${queryString} succeeded"
                     finalResponseReceived = true
+                } else if (responseCode == HttpURLConnection.HTTP_BAD_REQUEST ) {
+                    println "Words cannot describe why an HTTP 400 is returned for a record which already exists, sigh!"
+                    println "Request to ${url} with query string ${queryString} already exists: ${responseCode}"
+                    finalResponseReceived = true
                 } else {
                     println "Request to ${url} with query string ${queryString} failed with status " +
                             "${responseCode} and response ${connection.responseMessage}"
