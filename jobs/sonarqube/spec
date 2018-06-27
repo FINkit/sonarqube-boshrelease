@@ -14,7 +14,9 @@ templates:
   config/sonar.properties: config/sonar.properties
   config/configure-groups.groovy: config/configure-groups.groovy
   config/configure-settings.groovy: config/configure-settings.groovy
+  config/configure-users.groovy: config/configure-users.groovy
   config/group-permissions.json: config/group-permissions.json
+  config/users.json.erb: config/users.json
   config/SonarApiClient.groovy.erb: config/SonarApiClient.groovy
   data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
@@ -64,3 +66,9 @@ properties:
   sonar.organisations.list:
     description: "Comma separated list of GitHub organisations - e.g. Other,ANOther"
     default: ''
+  sonar.jenkins.password:
+    description: "Sonar Jenkins user password"
+    default: ''
+  sonar.jenkins.group:
+    description: "Sonar Jenkins group"
+    default: jenkins
