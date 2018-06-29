@@ -49,7 +49,7 @@ resources:
   source:
       uri: git@github.com:finkit/sonarqube-boshrelease
       branch: master
-      private_key: ((sonarqube_github_deploy_key.private))
+      private_key: ((sonarqube_boshrelease_github_deploy_key.private))
 - name: devtools-tests
   type: git
   source:
