@@ -229,6 +229,10 @@ jobs:
         params:
           source_file: source/source.yml
           manifest: sonarqube-boshrelease/sonarqube.yml
+          ops_files:
+          - add-test-group.yml
+          - add-test-user.yml
+          - sonarqube-local-auth.yml
           releases:
           - dev-sonarqube-boshrelease-tarball/dev-release.tgz
           stemcells:

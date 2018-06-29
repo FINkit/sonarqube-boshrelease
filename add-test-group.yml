@@ -1,0 +1,9 @@
+---
+- type: replace
+  path: /instance_groups/name=sonarqube/jobs/name=sonarqube/properties?/sonar/groups
+  value: |-
+    {
+                        "name":"testgroup",
+                        "description":"A group to administer Quality Gates and Profiles, and to create projects",
+                        "permissions":"gateadmin,profileadmin,provisioning"
+                    }
