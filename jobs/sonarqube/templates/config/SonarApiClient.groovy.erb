@@ -92,7 +92,8 @@ class SonarApiClient
 
                 def responseCode = connection.responseCode
 
-                if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
+                if ((responseCode == HttpURLConnection.HTTP_NOT_FOUND) ||
+                    (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED)) {
                     sleep(delayBetweenRetriesInMilliseconds)
                     println "Waiting ${delayBetweenRetriesInMilliseconds} milliseconds to post to ${url} with " + 
                             "${numberOfTimesToRetry} retries remaining"
