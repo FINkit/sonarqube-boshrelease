@@ -14,7 +14,7 @@ class SonarApiClient
     static def username = '<%= p('sonar.admin.username') %>'
     static def password = '<%= p('sonar.admin.password') %>'
 
-    static def groupsSync = '<%= p('sonar.groups.sync') %>'
+    static def groupsSync = '<%= p('sonar.groups_sync') %>'
 
     static def organisations = '<%= p('sonar.organisations.list') %>'
     static def organisationsList = organisations.tokenize(',')

@@ -1,0 +1,14 @@
+---
+- type: replace
+  path: /instance_groups/name=sonarqube/jobs/name=sonarqube/properties?/sonar/users
+  value: |-
+    {
+                        "name":"Test User",
+                        "login":"testuser",
+                        "password":"((test_user_password))",
+                        "group":"testgroup"
+                    }
+
+- type: replace
+  path: /variables/name=test_user_password?/type?
+  value: password

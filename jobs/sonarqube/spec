@@ -15,7 +15,7 @@ templates:
   config/configure-groups.groovy: config/configure-groups.groovy
   config/configure-settings.groovy: config/configure-settings.groovy
   config/configure-users.groovy: config/configure-users.groovy
-  config/group-permissions.json: config/group-permissions.json
+  config/groups.json.erb: config/groups.json
   config/users.json.erb: config/users.json
   config/SonarApiClient.groovy.erb: config/SonarApiClient.groovy
   data/properties.sh.erb: data/properties.sh
@@ -60,15 +60,15 @@ properties:
   sonar.use_github_auth:
     description: "A boolean indicating whether to use GitHub authentication"
     default: "false"
-  sonar.groups.sync:
+  sonar.groups_sync:
     description: "A boolean indicating whether to synchronise the GitHub groups"
     default: 'true'
   sonar.organisations.list:
     description: "Comma separated list of GitHub organisations - e.g. Other,ANOther"
     default: ''
-  sonar.jenkins.password:
-    description: "Sonar Jenkins user password"
-    default: ''
-  sonar.jenkins.group:
-    description: "Sonar Jenkins group"
-    default: jenkins
+  sonar.groups:
+   description: "Sonar groups"
+   default: ''
+  sonar.users:
+   description: "Sonar users"
+   default: ''
