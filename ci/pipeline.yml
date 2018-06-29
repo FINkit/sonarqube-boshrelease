@@ -232,7 +232,7 @@ jobs:
           ops_files:
           - sonarqube-boshrelease/operations/add-test-groups.yml
           - sonarqube-boshrelease/operations/add-test-users.yml
-          - sonarqube-boshrelease/operations/sonarqube-local-auth.yml
+          - sonarqube-boshrelease/operations/sonar-local-auth.yml
           releases:
           - dev-sonarqube-boshrelease-tarball/dev-release.tgz
           stemcells:
