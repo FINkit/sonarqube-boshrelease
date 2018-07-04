@@ -54,6 +54,12 @@ properties:
   sonar.database.type:
     description: "Database type, e.g. H2, MYSQL"
     default: H2
+  sonar.database.id:
+    description: "Permanent identifier for the database host in the IAAS"
+    default: ''
+  sonar.database.creds:
+    description: "Service account to access the database"
+    default: ''
   sonar.server.url:
     description: "sonar base URL"
     default: http://127.0.0.1:9000

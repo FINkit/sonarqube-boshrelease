@@ -6,4 +6,4 @@ files:
 - sonarqube/sonarqube-6.5.zip
 - sonarqube/sonar-auth-github-plugin-1.3.jar
 - sonarqube/sonar-java-plugin-4.15.0.12310.jar
-
+- sonarqube/run_cloudsql_query-201807031030

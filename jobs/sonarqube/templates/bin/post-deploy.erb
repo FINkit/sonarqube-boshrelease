@@ -3,6 +3,13 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
+SONARQUBE_DATABASE_TYPE="<%= p('sonar.database.type') %>"
+
+if [ "${SONARQUBE_DATABASE_TYPE}" != "H2" ]; then
+  mv /var/vcap/packages/sonarqube/run_cloudsql_query-* /var/vcap/jobs/sonarqube/config/run_cloudsql_query
+  /var/vcap/jobs/sonarqube/config/update-admin-password.sh
+fi
+
 export JAVA_HOME="/var/vcap/packages/oraclejdk"
 export GROOVY_HOME="/var/vcap/packages/groovy"
 export GROOVY="${GROOVY_HOME}/bin/groovy"
