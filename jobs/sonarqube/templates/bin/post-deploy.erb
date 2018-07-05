@@ -6,9 +6,7 @@ set -u # report the usage of uninitialized variables
 SONARQUBE_DATABASE_TYPE="<%= p('sonar.database.type') %>"
 
 if [ "${SONARQUBE_DATABASE_TYPE}" != "H2" ]; then
-  if [[ $(ls /var/vcap/packages/sonarqube/sonarqube/run_cloudsql_query-*) ]]; then
-    mv /var/vcap/packages/sonarqube/sonarqube/run_cloudsql_query-* /var/vcap/jobs/sonarqube/config/run_cloudsql_query
-  fi
+  cp /var/vcap/packages/sonarqube/sonarqube/run_cloudsql_query-* /var/vcap/jobs/sonarqube/config/run_cloudsql_query
 
   /var/vcap/jobs/sonarqube/config/update-admin-password.sh
 fi
