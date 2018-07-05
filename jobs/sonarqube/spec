@@ -18,6 +18,7 @@ templates:
   config/groups.json.erb: config/groups.json
   config/users.json.erb: config/users.json
   config/SonarApiClient.groovy.erb: config/SonarApiClient.groovy
+  config/update-admin-password.sh.erb: config/update-admin-password.sh
   data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
