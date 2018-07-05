@@ -52,6 +52,7 @@ properties:
     default: sonar
   sonar.database.password:
     description: "Database password for sonar database"
+    default: ''
   sonar.database.type:
     description: "Database type, e.g. H2, MYSQL"
     default: H2
