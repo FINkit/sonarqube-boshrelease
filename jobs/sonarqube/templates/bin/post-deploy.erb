@@ -9,6 +9,7 @@ if [ "${SONARQUBE_DATABASE_TYPE}" != "H2" ]; then
   cp /var/vcap/packages/sonarqube/sonarqube/run_cloudsql_query-* /var/vcap/jobs/sonarqube/config/run_cloudsql_query
 
   chmod +x /var/vcap/jobs/sonarqube/config/update-admin-password.sh
+  chmod +x /var/vcap/jobs/sonarqube/config/run_cloudsql_query
   /var/vcap/jobs/sonarqube/config/update-admin-password.sh
 fi
 
