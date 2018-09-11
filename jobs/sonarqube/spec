@@ -12,9 +12,10 @@ templates:
   bin/pre-start: bin/pre-start
   bin/post-deploy.erb: bin/post-deploy
   config/sonar.properties: config/sonar.properties
+  config/configure-github-settings.groovy: config/configure-github-settings.groovy
   config/configure-groups.groovy: config/configure-groups.groovy
-  config/configure-settings.groovy: config/configure-settings.groovy
   config/configure-users.groovy: config/configure-users.groovy
+  config/ConfigureWebhooks.groovy: config/ConfigureWebhooks.groovy
   config/groups.json.erb: config/groups.json
   config/users.json.erb: config/users.json
   config/SonarApiClient.groovy.erb: config/SonarApiClient.groovy
@@ -80,3 +81,6 @@ properties:
   sonar.users:
    description: "Sonar users"
    default: ''
+  sonar.webhooks.global.list:
+    description: "Comma separated pairs of global Webhook names and URL (up to a maximum of 10) - e.g. ASystems,http://localhost:6666/webhook" # Please note the ConfigureWebhooks script does not remove any existing webhooks, so an empty hooks list does not imply there are no webhooks.
+    default: ''

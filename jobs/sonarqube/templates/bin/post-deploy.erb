@@ -22,10 +22,16 @@ export GROOVY="${GROOVY_HOME}/bin/groovy"
 
 cd /var/vcap/jobs/sonarqube/config
 
+SONARQUBE_WEBHOOKS="<%= p('sonar.webhooks.global.list') %>"
+
+if [ -n "${SONARQUBE_WEBHOOKS}" ]; then
+  ${GROOVY} ConfigureWebhooks.groovy
+fi
+
 SONARQUBE_USE_GITHUB_AUTH="<%= p('sonar.use_github_auth') %>"
 
 if [ "${SONARQUBE_USE_GITHUB_AUTH}" == "true" ]; then
-  ${GROOVY} configure-settings.groovy
+  ${GROOVY} configure-github-settings.groovy
 fi
 
 ${GROOVY} configure-groups.groovy
