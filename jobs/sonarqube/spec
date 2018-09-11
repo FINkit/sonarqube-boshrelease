@@ -14,8 +14,8 @@ templates:
   config/sonar.properties: config/sonar.properties
   config/configure-github-settings.groovy: config/configure-github-settings.groovy
   config/configure-groups.groovy: config/configure-groups.groovy
-  config/ConfigureSettings.groovy: config/ConfigureSettings.groovy
   config/configure-users.groovy: config/configure-users.groovy
+  config/ConfigureWebhooks.groovy: config/ConfigureWebhooks.groovy
   config/groups.json.erb: config/groups.json
   config/users.json.erb: config/users.json
   config/SonarApiClient.groovy.erb: config/SonarApiClient.groovy
