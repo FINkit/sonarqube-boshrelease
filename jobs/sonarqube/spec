@@ -82,5 +82,5 @@ properties:
    description: "Sonar users"
    default: ''
   sonar.webhooks.global.list:
-    description: "Comma separated pairs of global Webhook names and URL (up to a maximum of 10) - e.g. ASystems,http://localhost:6666/webhook"
+    description: "Comma separated pairs of global Webhook names and URL (up to a maximum of 10) - e.g. ASystems,http://localhost:6666/webhook" # Please note the ConfigureWebhooks script does not remove any existing webhooks, so an empty hooks list does not imply there are no webhooks.
     default: ''
