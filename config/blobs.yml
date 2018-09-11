@@ -2,6 +2,10 @@ groovy/apache-groovy-binary-2.4.13.zip:
   size: 36587726
   object_id: 533334f0-f6e8-4959-6ce5-90687aa938c0
   sha: d14bba275221389cbc4726a8c8c14f5a0f9e891d
+groovy/snakeyaml-1.18.jar:
+  size: 284338
+  object_id: b773451e-a061-4a42-651b-b14b20a11af6
+  sha: e4a441249ade301985cb8d009d4e4a72b85bf68e
 oraclejava/jdk-8u161-linux-x64.tar.gz:
   size: 189756259
   object_id: eb100739-7d1c-48ff-5687-ee2ad4f0209f

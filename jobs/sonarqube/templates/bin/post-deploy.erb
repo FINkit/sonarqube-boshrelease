@@ -22,10 +22,12 @@ export GROOVY="${GROOVY_HOME}/bin/groovy"
 
 cd /var/vcap/jobs/sonarqube/config
 
+${GROOVY} ConfigureSettings.groovy
+
 SONARQUBE_USE_GITHUB_AUTH="<%= p('sonar.use_github_auth') %>"
 
 if [ "${SONARQUBE_USE_GITHUB_AUTH}" == "true" ]; then
-  ${GROOVY} configure-settings.groovy
+  ${GROOVY} configure-github-settings.groovy
 fi
 
 ${GROOVY} configure-groups.groovy

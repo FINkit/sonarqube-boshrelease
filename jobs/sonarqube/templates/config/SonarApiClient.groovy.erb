@@ -19,6 +19,8 @@ class SonarApiClient
     static def organisations = '<%= p('sonar.organisations.list') %>'
     static def organisationsList = organisations.tokenize(',')
 
+    static def globalWebhooks = '<%= p('sonar.webhooks.global.list') %>'
+
     private static String encode(value) {
         return URLEncoder.encode(value, 'UTF-8')
     }
