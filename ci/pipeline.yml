@@ -117,21 +117,6 @@ resources:
     initial_version: 0.0.0
     key: sonarqube.version
 
-groups:
-- name: create
-  jobs:
-  - set-pipeline
-  - setup-infrastructure
-  - create-dev-release
-  - test-sonarqube
-  - prerelease-patch
-  - prerelease-minor
-  - prerelease-major
-  - release-final
-- name: destroy
-  jobs:
-  - destroy-bosh
-
 jobs:
 - name: set-pipeline
   plan:
@@ -246,16 +231,6 @@ jobs:
       params:
         repository: updated-bbl-state
         rebase: true
-  <<: *slack-alert
-
-- name: destroy-bosh
-  serial_groups:
-  - bbl
-  plan:
-  - aggregate:
-    - get: bbl-state
-    - get: cf-deployment-concourse-tasks
-
   <<: *slack-alert
 
 - name: release-final
