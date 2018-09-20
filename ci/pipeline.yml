@@ -160,6 +160,7 @@ jobs:
   - aggregate:
     - get: bbl-state
     - get: cf-deployment-concourse-tasks
+      trigger: true
     - get: concourse-tasks
     - get: devtools-tests
     - get: dev-sonarqube-boshrelease-tarball
