@@ -183,6 +183,7 @@ jobs:
     - get: sonarqube-boshrelease
       passed: [create-dev-release]
     - get: warden-stemcell
+      trigger: true
   - task: bbl-up
     file: cf-deployment-concourse-tasks/bbl-up/task.yml
     input_mapping:
