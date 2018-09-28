@@ -12,7 +12,7 @@ cd $PACKAGES_PATH
 unzip -o sonarqube*.zip
 
 # TODO Check whether this will ultimately lose data, even when using MySQL
-cp --archive --force sonarqube-6.5/* ${INSTALL_PATH}
+cp --archive --force sonarqube-7.3/* ${INSTALL_PATH}
 
 mkdir --parents ${DOWNLOADED_PLUGINS_TARGET}
 cp *.jar ${DOWNLOADED_PLUGINS_TARGET}
