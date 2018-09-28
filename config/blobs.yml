@@ -18,11 +18,23 @@ sonarqube/sonar-auth-github-plugin-1.3.jar:
   size: 283151
   object_id: 8841da3f-2f5b-4e49-64eb-809d1d54ee07
   sha: 453b56e3c33143931567b8a89a9bbf25160feeb8
+sonarqube/sonar-auth-github-plugin-1.4.0.695.jar:
+  size: 284402
+  object_id: d47f467f-f290-451a-67ff-0978d4f0a9b5
+  sha: 5e678142946e2a8c9ce9aff5a79f1ed4d2d55804
 sonarqube/sonar-java-plugin-4.15.0.12310.jar:
   size: 6759535
   object_id: c6e0521e-1c69-47f0-4bf4-50a0387c4ce0
   sha: c53f067a36be2ec57ea1bb04fe40e47028d4154d
+sonarqube/sonar-java-plugin-5.7.0.15470.jar:
+  size: 9022405
+  object_id: 40d906f8-a95e-4152-63c8-8f0ac329234d
+  sha: 26ff469ad0ae2f1ae45064288141c612908d0867
 sonarqube/sonarqube-6.5.zip:
   size: 143286376
-  object_id: 930ff2af-98ee-4b10-64dd-ba88bf0244f2
+  object_id: 75e8df9e-6ad4-459c-68d1-a314d530f11e
   sha: 266051af830e1462f3455802326a52ba6f86efd9
+sonarqube/sonarqube-7.3.zip:
+  size: 170973338
+  object_id: 024de8a9-2a19-4d85-77b8-d9553ef66277
+  sha: 8c7a42bcdde9495c0449ed44496793c246cb829a
