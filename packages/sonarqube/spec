@@ -7,3 +7,4 @@ files:
 - sonarqube/sonar-auth-github-plugin-1.4.0.695.jar
 - sonarqube/sonar-java-plugin-5.7.0.15470.jar
 - sonarqube/run_cloudsql_query-201807031030
+- sonarqube/bcrypt-201810011145
