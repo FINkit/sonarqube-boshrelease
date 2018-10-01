@@ -69,10 +69,10 @@ resources:
     bucket: ((buildtools-release-tarballs.bucket))
     json_key: ((prod-build-storage-google-key))
     regexp: sonarqube-boshrelease/sonarqube-boshrelease-v(.*).tgz
-- name: warden-stemcell
+- name: warden-stemcell-xenial
   type: bosh-io-stemcell
   source:
-    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    name: bosh-warden-boshlite-ubuntu-xenial-go_agent
 - name: github-prerelease
   type: github-release
   source:
@@ -182,7 +182,7 @@ jobs:
       trigger: true
     - get: sonarqube-boshrelease
       passed: [create-dev-release]
-    - get: warden-stemcell
+    - get: warden-stemcell-xenial
       trigger: true
   - task: bbl-up
     file: cf-deployment-concourse-tasks/bbl-up/task.yml
@@ -218,7 +218,7 @@ jobs:
       releases:
       - dev-sonarqube-boshrelease-tarball/dev-release.tgz
       stemcells:
-      - warden-stemcell/stemcell.tgz
+      - warden-stemcell-xenial/stemcell.tgz
       vars:
         deployment_name: *deployment-name
   - task: test-sonarqube
