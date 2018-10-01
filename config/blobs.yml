@@ -10,6 +10,10 @@ oraclejava/jdk-8u161-linux-x64.tar.gz:
   size: 189756259
   object_id: eb100739-7d1c-48ff-5687-ee2ad4f0209f
   sha: 9662b358ec90ecdc2c06acc2e326fbf25eaf567d
+sonarqube/bcrypt-201810011145:
+  size: 1927262
+  object_id: 62d5fb6b-09ce-49e0-6cd3-528b3b995de3
+  sha: 19c1e7ab7a67ddb92c2e5dd51f9effb57739f5a6
 sonarqube/run_cloudsql_query-201807031030:
   size: 6643255
   object_id: b7cadca3-1451-41ad-5fde-fe0f3ce884bd

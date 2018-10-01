@@ -1,7 +1,5 @@
 #!/bin/sh -eux
 
-set -o pipefail
-
 DATE=$(date +%Y%m%d%H%M)
 GOPATH="${PWD}"
 
