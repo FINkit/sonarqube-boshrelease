@@ -79,6 +79,7 @@ class SonarApiClient
                     int delayBetweenRetriesInMilliseconds = 1000) {
 
         def finalResponseReceived = false
+        def now
 
         while ((!finalResponseReceived) && (numberOfTimesToRetry-- > 0)) {
 
@@ -97,24 +98,32 @@ class SonarApiClient
                 if ((responseCode == HttpURLConnection.HTTP_NOT_FOUND) ||
                     (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED)) {
                     sleep(delayBetweenRetriesInMilliseconds)
-                    println "Waiting ${delayBetweenRetriesInMilliseconds} milliseconds to post to ${url} with " + 
+                    now = new Date().format("yyy/MM/dd HH:mm:ss")
+                    println "${now} - Waiting ${delayBetweenRetriesInMilliseconds} milliseconds to post to ${url} with " +
                             "${numberOfTimesToRetry} retries remaining"
                 } else if (responseCode == HttpURLConnection.HTTP_OK ||
                            responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
-                    println "Request to ${url} with query string ${queryString} succeeded"
+                    now = new Date().format("yyy/MM/dd HH:mm:ss")
+                    println "${now} - Request to ${url} with query string ${queryString} succeeded"
                     finalResponseReceived = true
                 } else if (responseCode == HttpURLConnection.HTTP_BAD_REQUEST ) {
-                    println "Words cannot describe why an HTTP 400 is returned for a record which already exists, sigh!"
-                    println "Request to ${url} with query string ${queryString} already exists: ${responseCode}"
+                    now = new Date().format("yyy/MM/dd HH:mm:ss")
+                    println "${now} - Words cannot describe why an HTTP 400 is returned for a record which already exists, sigh!"
+                    println "${now} - Request to ${url} with query string ${queryString} already exists: ${responseCode}"
                     finalResponseReceived = true
                 } else {
-                    println "Request to ${url} with query string ${queryString} failed with status " +
+                    now = new Date().format("yyy/MM/dd HH:mm:ss")
+                    println "${now} - Request to ${url} with query string ${queryString} failed with status " +
                             "${responseCode} and response ${connection.responseMessage}"
                     return false
                 }
             } catch (IOException ioe) {
-                println "Request failed with error: ${ioe}"
-                return false
+                now = new Date().format("yyy/MM/dd HH:mm:ss")
+                println "${now} - Request failed with error: ${ioe}"
+                sleep(delayBetweenRetriesInMilliseconds)
+                now = new Date().format("yyy/MM/dd HH:mm:ss")
+                println "${now} - Waiting ${delayBetweenRetriesInMilliseconds} milliseconds to post to ${url} with " +
+                            "${numberOfTimesToRetry} retries remaining"
             } finally {
                 if (writer != null) writer.close()
                 if (connection != null) connection.disconnect()
@@ -122,7 +131,8 @@ class SonarApiClient
         }
 
         if (!finalResponseReceived) {
-            println "Timed out waiting for response from ${url}"
+            now = new Date().format("yyy/MM/dd HH:mm:ss")
+            println "${now} - Timed out waiting for response from ${url}"
             return false
         }
 
