@@ -35,6 +35,7 @@ fi
 
 ${GROOVY} configure-groups.groovy
 ${GROOVY} configure-users.groovy
+${GROOVY} configure-jenkins-token.groovy
 
 SONARQUBE_WEBHOOKS="<%= p('sonar.webhooks.global.list') %>"
 

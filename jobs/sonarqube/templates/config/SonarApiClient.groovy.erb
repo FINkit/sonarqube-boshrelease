@@ -21,6 +21,8 @@ class SonarApiClient
 
     static def globalWebhooks = '<%= p('sonar.webhooks.global.list') %>'
 
+    static def responseBody
+
     private static String encode(value) {
         return URLEncoder.encode(value, 'UTF-8')
     }
@@ -106,6 +108,7 @@ class SonarApiClient
                     now = new Date().format("yyy/MM/dd HH:mm:ss")
                     println "${now} - Request to ${url} with query string ${queryString} succeeded"
                     finalResponseReceived = true
+                    responseBody = connection.inputStream.text
                 } else if (responseCode == HttpURLConnection.HTTP_BAD_REQUEST ) {
                     now = new Date().format("yyy/MM/dd HH:mm:ss")
                     println "${now} - Words cannot describe why an HTTP 400 is returned for a record which already exists, sigh!"
