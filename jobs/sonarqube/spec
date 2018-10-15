@@ -6,6 +6,11 @@ packages:
 - oraclejdk
 - sonarqube
 
+consumes:
+- name: jenkins_master
+  type: jenkins
+  optional: true
+
 templates:
   bin/sonarqube_ctl: bin/sonarqube_ctl
   bin/monit_debugger: bin/monit_debugger
