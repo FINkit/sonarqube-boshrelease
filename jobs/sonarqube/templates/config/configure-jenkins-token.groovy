@@ -4,14 +4,20 @@ import SonarApiClient
 <% if_link('jenkins_master') do |jenkins_master| %>
 
 def sonarApiTokenUrl = SonarApiClient.sonarApiUrl + 'user_tokens/generate'
+def tokenResponse = SonarApiClient.postQueryStringAndGetResponse(sonarApiTokenUrl, "name=Jenkins")
+def now
 
-def tokenResponse = SonarApiClient.postQueryString(sonarApiTokenUrl, "name=Jenkins")
-
-if (!tokenResponse) {
+if (!tokenResponse.get(0)) {
     System.exit(1)
 }
 
-def responseBody = SonarApiClient.responseBody
+if (tokenResponse.get(1) == HttpURLConnection.HTTP_BAD_REQUEST) {
+    now = new Date().format("yyy/MM/dd HH:mm:ss")
+    println "${now} - Jenkins access token already exists, not regenerating"
+    System.exit(0)
+}
+
+def responseBody = tokenResponse.get(2)
 def jsonParser = new JsonSlurper()
 def data = jsonParser.parseText(responseBody)
 def token = data.token
@@ -37,9 +43,11 @@ def scriptRequestBody = "script=${contents}"
 
 def scriptResponse = ["curl", "--header", "${crumb}", "--data-urlencode", "${scriptRequestBody}", "--user", "${jenkins_username}:${jenkins_token}", "${jenkins_url}/script"].execute().text
 
-println "${scriptResponse}"
+now = new Date().format("yyy/MM/dd HH:mm:ss")
+println "${now} - ${scriptResponse}"
 
-println "Configuring Jenkins... COMPLETE"
+now = new Date().format("yyy/MM/dd HH:mm:ss")
+println "${now} - Configuring Jenkins... COMPLETE"
 
 <% end %>
 
