@@ -4,6 +4,12 @@
   value: |-
     {
                         "name":"testgroup",
+                        "description":"A group to globally administer Quality Gates and Profiles, and administer Issues on Projects (with browsing)",
+                        "globalPermissions":"gateadmin,profileadmin",
+                        "projectPermissions":"codeviewer,issueadmin"
+                    },
+                    {
+                        "name":"testadmingroup",
                         "description":"A group to administer Quality Gates and Profiles, and to create projects",
-                        "permissions":"gateadmin,profileadmin,provisioning"
+                        "globalPermissions":"gateadmin,profileadmin,provisioning"
                     }

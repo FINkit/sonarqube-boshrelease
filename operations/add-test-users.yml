@@ -3,10 +3,23 @@
   path: /instance_groups/name=sonarqube/jobs/name=sonarqube/properties?/sonar/users
   value: |-
     {
-                        "name":"Test User",
-                        "login":"testuser",
+                        "name":"Test Standalone User",
+                        "login":"teststandaloneuser",
+                        "password":"((test_user_password))",
+                        "globalPermissions":"gateadmin,profileadmin,provisioning"
+                    },
+                    {
+                        "name":"Test Group User",
+                        "login":"testgroupuser",
                         "password":"((test_user_password))",
                         "group":"testgroup"
+                    },
+                    {
+                        "name":"Test Standalone Admin User",
+                        "login":"teststandaloneadminuser",
+                        "password":"((test_user_password))",
+                        "globalPermissions":"gateadmin,profileadmin,provisioning",
+                        "projectPermissions":"codeviewer,issueadmin"
                     }
 
 - type: replace
