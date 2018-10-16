@@ -4,7 +4,6 @@ import hudson.plugins.sonar.*
 import hudson.plugins.sonar.model.*
 
 def instance = Jenkins.getInstance()
-// def descriptor = instance.getDescriptor("hudson.plugins.sonar.SonarGlobalConfiguration")
 def sonarAuthToken = "SONAR_AUTH_TOKEN"
 
 def SonarGlobalConfiguration sonarGlobalConfiguration = instance.getDescriptor(SonarGlobalConfiguration.class)
@@ -35,6 +34,3 @@ if (!sonarInstallationsExists) {
     sonarGlobalConfiguration.setBuildWrapperEnabled(true)
     sonarGlobalConfiguration.save()
 }
-
-// descriptor.setInstallations(sonarInstallation)
-// descriptor.save()
