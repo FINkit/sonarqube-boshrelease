@@ -1,0 +1,40 @@
+import jenkins.model.*
+import hudson.tasks.*
+import hudson.plugins.sonar.*
+import hudson.plugins.sonar.model.*
+
+def instance = Jenkins.getInstance()
+// def descriptor = instance.getDescriptor("hudson.plugins.sonar.SonarGlobalConfiguration")
+def sonarAuthToken = "SONAR_AUTH_TOKEN"
+
+def SonarGlobalConfiguration sonarGlobalConfiguration = instance.getDescriptor(SonarGlobalConfiguration.class)
+
+def sonarInstallation = new SonarInstallation(
+  "<%= p('sonar.installation.name') %>",
+  "<%= p('sonar.server.url') %>",
+  "${sonarAuthToken}",
+  "",
+  "",
+  new TriggersConfig(),
+  ""
+)
+
+def sonarInstallations = sonarGlobalConfiguration.getInstallations()
+  def sonarInstallationsExists = false
+  sonarInstallations.each {
+      installation = (SonarInstallation) it
+      if (sonarInstallation.getName() == installation.getName()) {
+          sonarInstallationExists = true
+          println("Found existing installation: " + installation.getName())
+      }
+  }
+
+if (!sonarInstallationsExists) {
+    sonarInstallations += sonarInstallation
+    sonarGlobalConfiguration.setInstallations((SonarInstallation[]) sonarInstallations)
+    sonarGlobalConfiguration.setBuildWrapperEnabled(true)
+    sonarGlobalConfiguration.save()
+}
+
+// descriptor.setInstallations(sonarInstallation)
+// descriptor.save()

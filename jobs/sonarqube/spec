@@ -23,7 +23,7 @@ templates:
   config/configure-users.groovy: config/configure-users.groovy
   config/ConfigureWebhooks.groovy: config/ConfigureWebhooks.groovy
   config/configure-jenkins-token.groovy: config/configure-jenkins-token.groovy
-  config/configure-jenkins-sonar.groovy: config/configure-jenkins-sonar.groovy
+  config/configure-jenkins-sonar.groovy.erb: config/configure-jenkins-sonar.groovy
   config/groups.json.erb: config/groups.json
   config/users.json.erb: config/users.json
   config/SonarApiClient.groovy.erb: config/SonarApiClient.groovy
@@ -71,6 +71,9 @@ properties:
   sonar.database.creds:
     description: "Service account to access the database"
     default: ''
+  sonar.installation.name:
+    description: "Sonar installation name"
+    default: "Sonarqube"
   sonar.server.url:
     description: "sonar base URL"
     default: http://127.0.0.1:9000
