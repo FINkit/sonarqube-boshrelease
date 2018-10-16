@@ -3,18 +3,25 @@ import SonarApiClient
 
 <% if_link('jenkins_master') do |jenkins_master| %>
 
-def sonarApiTokenUrl = SonarApiClient.sonarApiUrl + 'user_tokens/generate'
-def tokenResponse = SonarApiClient.postQueryStringAndGetResponse(sonarApiTokenUrl, "name=Jenkins")
 def now
+def jenkinsTokenName = "Jenkins"
+
+// revoking any existing token and regenerating is the only way to get the token
+// thus allowing it to be passed to Jenkins
+now = new Date().format("yyy/MM/dd HH:mm:ss")
+println "${now} - Revoking any existing ${jenkinsTokenName} access token"
+
+def sonarApiRevokeTokensUrl = SonarApiClient.sonarApiUrl + 'user_tokens/revoke'
+def jenkinsTokenPair = SonarApiClient.buildSingleValuedKeyPair("name", jenkinsTokenName)
+SonarApiClient.postQueryString(sonarApiRevokeTokensUrl, jenkinsTokenPair)
+
+now = new Date().format("yyy/MM/dd HH:mm:ss")
+println "${now} - Generating a ${jenkinsTokenName} access token"
+def sonarApiTokenUrl = SonarApiClient.sonarApiUrl + 'user_tokens/generate'
+def tokenResponse = SonarApiClient.postQueryStringAndGetResponse(sonarApiTokenUrl, jenkinsTokenPair)
 
 if (!tokenResponse.get(0)) {
     System.exit(1)
-}
-
-if (tokenResponse.get(1) == HttpURLConnection.HTTP_BAD_REQUEST) {
-    now = new Date().format("yyy/MM/dd HH:mm:ss")
-    println "${now} - Jenkins access token already exists, not regenerating"
-    System.exit(0)
 }
 
 def responseBody = tokenResponse.get(2)
@@ -41,6 +48,8 @@ def crumb = "curl --silent --user ${jenkins_username}:${jenkins_token} ${jenkins
 
 def scriptRequestBody = "script=${contents}" 
 
+now = new Date().format("yyy/MM/dd HH:mm:ss")
+println "${now} - Configuring Jenkins with access token"
 def scriptResponse = ["curl", "--header", "${crumb}", "--data-urlencode", "${scriptRequestBody}", "--user", "${jenkins_username}:${jenkins_token}", "${jenkins_url}/script"].execute().text
 
 now = new Date().format("yyy/MM/dd HH:mm:ss")
