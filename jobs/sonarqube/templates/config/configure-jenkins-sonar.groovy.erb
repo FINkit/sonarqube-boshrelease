@@ -19,14 +19,14 @@ def sonarInstallation = new SonarInstallation(
 )
 
 def sonarInstallations = sonarGlobalConfiguration.getInstallations()
-  def sonarInstallationsExists = false
-  sonarInstallations.each {
-      installation = (SonarInstallation) it
-      if (sonarInstallation.getName() == installation.getName()) {
-          sonarInstallationExists = true
-          println("Found existing installation: " + installation.getName())
-      }
-  }
+def sonarInstallationsExists = false
+sonarInstallations.each {
+    installation = (SonarInstallation) it
+    if (sonarInstallation.getName() == installation.getName()) {
+        sonarInstallationsExists = true
+        println("Found existing installation: " + installation.getName())
+    }
+}
 
 if (!sonarInstallationsExists) {
     sonarInstallations += sonarInstallation
