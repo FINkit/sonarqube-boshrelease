@@ -77,9 +77,20 @@ class SonarApiClient
                     String queryString,
                     int numberOfTimesToRetry = 60,
                     int delayBetweenRetriesInMilliseconds = 1000) {
+        Tuple result = postQueryStringAndGetResponse(url, queryString, numberOfTimesToRetry, delayBetweenRetriesInMilliseconds)
+        return result.get(0)
+    }
+
+    static Tuple postQueryStringAndGetResponse(
+                    String url,
+                    String queryString,
+                    int numberOfTimesToRetry = 60,
+                    int delayBetweenRetriesInMilliseconds = 1000) {
 
         def finalResponseReceived = false
         def now
+        def responseCode
+        def responseBody
 
         while ((!finalResponseReceived) && (numberOfTimesToRetry-- > 0)) {
 
@@ -93,7 +104,7 @@ class SonarApiClient
                 writer.write(queryString)
                 writer.flush()
 
-                def responseCode = connection.responseCode
+                responseCode = connection.responseCode
 
                 if ((responseCode == HttpURLConnection.HTTP_NOT_FOUND) ||
                     (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED)) {
@@ -105,6 +116,7 @@ class SonarApiClient
                            responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
                     now = new Date().format("yyy/MM/dd HH:mm:ss")
                     println "${now} - Request to ${url} with query string ${queryString} succeeded"
+                    responseBody = connection.inputStream.text
                     finalResponseReceived = true
                 } else if (responseCode == HttpURLConnection.HTTP_BAD_REQUEST ) {
                     now = new Date().format("yyy/MM/dd HH:mm:ss")
@@ -115,7 +127,7 @@ class SonarApiClient
                     now = new Date().format("yyy/MM/dd HH:mm:ss")
                     println "${now} - Request to ${url} with query string ${queryString} failed with status " +
                             "${responseCode} and response ${connection.responseMessage}"
-                    return false
+                    return new Tuple(false, responseCode, "")
                 }
             } catch (IOException ioe) {
                 now = new Date().format("yyy/MM/dd HH:mm:ss")
@@ -133,10 +145,9 @@ class SonarApiClient
         if (!finalResponseReceived) {
             now = new Date().format("yyy/MM/dd HH:mm:ss")
             println "${now} - Timed out waiting for response from ${url}"
-            return false
+            return new Tuple(false, responseCode, "")
         }
 
-        return true
+        return new Tuple(true, responseCode, responseBody)
     }
 }
-

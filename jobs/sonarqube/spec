@@ -6,6 +6,11 @@ packages:
 - oraclejdk
 - sonarqube
 
+consumes:
+- name: jenkins_master
+  type: jenkins
+  optional: true
+
 templates:
   bin/sonarqube_ctl: bin/sonarqube_ctl
   bin/monit_debugger: bin/monit_debugger
@@ -17,6 +22,8 @@ templates:
   config/configure-settings.groovy: config/configure-settings.groovy
   config/configure-users.groovy: config/configure-users.groovy
   config/ConfigureWebhooks.groovy: config/ConfigureWebhooks.groovy
+  config/configure-jenkins-token.groovy: config/configure-jenkins-token.groovy
+  config/configure-jenkins-sonar.groovy: config/configure-jenkins-sonar.groovy
   config/groups.json.erb: config/groups.json
   config/users.json.erb: config/users.json
   config/SonarApiClient.groovy.erb: config/SonarApiClient.groovy
