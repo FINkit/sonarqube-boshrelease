@@ -33,7 +33,7 @@ static void addPermission(login, permission, permissionsUrl, template) {
     // Currently this seems only to be needed for project permissions.
     // The API claims both are optional, but when not included, an error is specified indicating one of the other, not both, is required.
     if (template && !template.allWhitespace) {
-        def templatePair = SonarApiClient.buildSingleValuedKeyPair('templateName', template)
+        def templatePair = SonarApiClient.buildSingleValuedKeyPair('templateId', template)
         queryValues = [loginPair, permissionsPair, templatePair]
     }
 
