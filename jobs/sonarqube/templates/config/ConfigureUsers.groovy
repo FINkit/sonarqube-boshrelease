@@ -83,7 +83,7 @@ for (user in userData) {
         def projectPermissions = projectPermissionsList.tokenize(',')
 
         for (projectPermission in projectPermissions) {
-            addPermission(user.get(1), projectPermission, sonarApiProjectPermissionsUrl, 'default_template')
+            addPermission(user.get(1), projectPermission, sonarApiProjectPermissionsUrl, "default_template")
         }
     }
 }

@@ -82,7 +82,7 @@ for (group in buildGroupsData()) {
         def projectPermissions = projectPermissionsList.tokenize(',')
 
         for (projectPermission in projectPermissions) {
-            addPermission(group.get(0), projectPermission, sonarApiProjectPermissionsUrl)
+            addPermission(group.get(0), projectPermission, sonarApiProjectPermissionsUrl, "default_template")
         }
     }
 }
