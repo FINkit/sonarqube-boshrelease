@@ -59,17 +59,28 @@ class SonarApiClient
 
     private static String generateAuthValue() {
         return "${username}:${password}".getBytes().encodeBase64().toString()
-    }   
+    }
 
-    private static HttpURLConnection openPostConnection(String url) {
+    private static HttpURLConnection openConnection(String methodType, String url) {
         def connection = new URL(url).openConnection() as HttpURLConnection
 
         connection.setRequestProperty('Accept', 'application/json')
         connection.setRequestProperty('Authorization', "Basic ${generateAuthValue()}")
-        connection.setRequestMethod('POST')
+        connection.setRequestMethod(methodType)
         connection.doOutput = true
 
         return connection
+    }
+
+    static Tuple getQueryResponse(String url) {
+        def connection = openConnection("GET", url)
+        def responseCode = connection.responseCode
+        def responseBody
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            responseBody = connection.inputStream.text
+        }
+
+        return new Tuple(responseCode, responseBody)
     }
 
     static boolean postQueryString(
@@ -98,7 +109,7 @@ class SonarApiClient
             def writer
 
             try {
-                connection = openPostConnection(url)
+                connection = openConnection("POST", url)
                 writer = new OutputStreamWriter(connection.outputStream)
 
                 writer.write(queryString)
