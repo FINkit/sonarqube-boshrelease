@@ -19,12 +19,24 @@ static List<Tuple> buildGroupsData() {
     return groups
 }
 
-static void addPermission(groupName, permission, permissionsUrl) {
+static void addPermission(login, permission, permissionsUrl) {
+    addPermission(login, permission, permissionsUrl, "")
+}
+
+static void addPermission(groupName, permission, permissionsUrl, template) {
     System.out.println("Adding permission ${permission} for ${groupName}")
 
     def groupNamePair = SonarApiClient.buildSingleValuedKeyPair('groupName', groupName)
     def permissionsPair = SonarApiClient.buildSingleValuedKeyPair('permission', permission)
     def queryValues = [groupNamePair, permissionsPair]
+
+    // The API claims both template ID and name are optional, but when not included,
+    // an error is specified indicating one of the other, not both, is required.
+    if (template && !template.allWhitespace) {
+        def templatePair = SonarApiClient.buildSingleValuedKeyPair('templateId', template)
+        queryValues = [groupNamePair, permissionsPair, templatePair]
+    }
+
     def queryString = SonarApiClient.buildQueryString(queryValues.iterator())
     def querySucceeded = SonarApiClient.postQueryString(permissionsUrl, queryString)
 
