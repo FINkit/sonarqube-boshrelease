@@ -18,9 +18,9 @@ templates:
   bin/post-deploy.erb: bin/post-deploy
   config/sonar.properties: config/sonar.properties
   config/configure-github-settings.groovy: config/configure-github-settings.groovy
-  config/configure-groups.groovy: config/configure-groups.groovy
+  config/ConfigureGroups.groovy: config/ConfigureGroups.groovy
   config/configure-settings.groovy: config/configure-settings.groovy
-  config/configure-users.groovy: config/configure-users.groovy
+  config/ConfigureUsers.groovy: config/ConfigureUsers.groovy
   config/ConfigureWebhooks.groovy: config/ConfigureWebhooks.groovy
   config/configure-jenkins-token.groovy: config/configure-jenkins-token.groovy
   config/configure-jenkins-sonar.groovy.erb: config/configure-jenkins-sonar.groovy

@@ -33,8 +33,8 @@ if [ "${SONARQUBE_USE_GITHUB_AUTH}" == "true" ]; then
   ${GROOVY} configure-github-settings.groovy
 fi
 
-${GROOVY} configure-groups.groovy
-${GROOVY} configure-users.groovy
+${GROOVY} ConfigureGroups.groovy
+${GROOVY} ConfigureUsers.groovy
 ${GROOVY} configure-jenkins-token.groovy
 
 SONARQUBE_WEBHOOKS="<%= p('sonar.webhooks.global.list') %>"
