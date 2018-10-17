@@ -30,8 +30,8 @@ static void addPermission(login, permission, permissionsUrl, template) {
     def permissionsPair = SonarApiClient.buildSingleValuedKeyPair('permission', permission)
     def queryValues = [loginPair, permissionsPair]
 
-    // Currently this seems only to be needed for project permissions.
-    // The API claims both are optional, but when not included, an error is specified indicating one of the other, not both, is required.
+    // The API claims both template ID and name are optional, but when not included,
+    // an error is specified indicating one of the other, not both, is required.
     if (template && !template.allWhitespace) {
         def templatePair = SonarApiClient.buildSingleValuedKeyPair('templateId', template)
         queryValues = [loginPair, permissionsPair, templatePair]
