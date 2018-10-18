@@ -4,8 +4,19 @@ import SonarApiClient
 <% if_link('jenkins_master') do |jenkins_master| %>
 
 def now
+
+def sonarUsername = "<%= link('jenkins_master').p('jenkins.github.integration_user.name') %>"
+
+def sonarUseGithubAuth = <%= p('sonar.use_github_auth') %>
+
+if (!sonarUseGithubAuth) {
+    sonarUsername = "<%= p('sonar.admin.username') %>"
+}
+
+def jenkinsLoginPair = SonarApiClient.buildSingleValuedKeyPair("login", sonarUsername)
+
 def sonarApiTokensSearchUrl = SonarApiClient.sonarApiUrl + 'user_tokens/search'
-def tokensResponse = SonarApiClient.getQueryResponse(sonarApiTokensSearchUrl)
+def tokensResponse = SonarApiClient.getQueryResponse(sonarApiTokensSearchUrl + "?" + jenkinsLoginPair)
 
 def jsonParser = new JsonSlurper()
 def tokens = jsonParser.parseText(tokensResponse.get(1))
@@ -26,7 +37,9 @@ now = new Date().format("yyy/MM/dd HH:mm:ss")
 println "${now} - Generating a ${jenkinsSonarTokenName} access token"
 def sonarApiTokenUrl = SonarApiClient.sonarApiUrl + 'user_tokens/generate'
 def jenkinsTokenPair = SonarApiClient.buildSingleValuedKeyPair("name", jenkinsSonarTokenName)
-def tokenResponse = SonarApiClient.postQueryStringAndGetResponse(sonarApiTokenUrl, jenkinsTokenPair)
+def queryValues = [jenkinsTokenPair, jenkinsLoginPair]
+def queryString = SonarApiClient.buildQueryString(queryValues.iterator())
+def tokenResponse = SonarApiClient.postQueryStringAndGetResponse(sonarApiTokenUrl, queryString)
 
 if (!tokenResponse.get(0)) {
     System.exit(1)
@@ -37,13 +50,14 @@ def data = jsonParser.parseText(responseBody)
 def token = data.token
 
 String contents = new File('/var/vcap/jobs/sonarqube/config/configure-jenkins-sonar.groovy').getText('UTF-8') 
-contents = contents.replaceAll( "SONAR_AUTH_TOKEN", "${token}")
+contents = contents.replaceAll("SONAR_AUTH_TOKEN", "${token}")
 
-def jenkinsUseGithubAuth = "<%= link('jenkins_master').p('jenkins.use_github_auth') %>"
 def jenkinsUsername = "<%= link('jenkins_master').p('jenkins.github.integration_user.name') %>"
 def jenkinsToken = "<%= link('jenkins_master').p('jenkins.github.integration_user.access_token') %>"
 
-if (jenkinsUseGithubAuth == "false") {
+def jenkinsUseGithubAuth = <%= link('jenkins_master').p('jenkins.use_github_auth') %>
+
+if (!jenkinsUseGithubAuth) {
     jenkinsUsername = "administrator"
     jenkinsToken = "<%= link('jenkins_master').p('jenkins.admin.password') %>"
 }
@@ -67,7 +81,9 @@ now = new Date().format("yyy/MM/dd HH:mm:ss")
 println "${now} - Revoking any existing ${oldJenkinsSonarTokenName} access token"
 def sonarApiRevokeTokensUrl = SonarApiClient.sonarApiUrl + 'user_tokens/revoke'
 def oldJenkinsSonarTokenPair = SonarApiClient.buildSingleValuedKeyPair("name", oldJenkinsSonarTokenName)
-SonarApiClient.postQueryString(sonarApiRevokeTokensUrl, oldJenkinsSonarTokenPair)
+queryValues = [oldJenkinsSonarTokenPair, jenkinsLoginPair]
+queryString = SonarApiClient.buildQueryString(queryValues.iterator())
+SonarApiClient.postQueryString(sonarApiRevokeTokensUrl, queryString)
 
 now = new Date().format("yyy/MM/dd HH:mm:ss")
 println "${now} - Configuring Jenkins... COMPLETE"
