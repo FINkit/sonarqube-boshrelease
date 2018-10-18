@@ -60,8 +60,10 @@ class SonarApiClient
     private static setSonarCredentials() {
         def useGithubAuth = <%= p('sonar.use_github_auth') %>
         if (useGithubAuth) {
+            <% if_link('jenkins_master') do |jenkins_master| %>
             username = "<%= link('jenkins_master').p('jenkins.github.integration_user.name') %>"
             password = "<%= link('jenkins_master').p('jenkins.github.integration_user.access_token') %>"
+            <% end %>
         } else {
             username = "<%= p('sonar.admin.username') %>"
             password = "<%= p('sonar.admin.password') %>"
