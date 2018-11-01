@@ -21,14 +21,14 @@ run:
       # shellcheck disable=SC2029
       ssh -o StrictHostKeyChecking=no -fNnL "9000:$ip:9000" -i "$JUMPBOX_PRIVATE_KEY" "$JUMPBOX_USER@$JUMPBOX_HOST"
       trap "pkill ssh" EXIT
-      export SONARQUBE_HOST="http://localhost:9000"
+      export SONAR_URL="http://localhost:9000"
     popd
 
-    cp -R sonarqube-boshrelease/ci/tests/sonarqubetest /go/src/
+    cp -R sonarqube-boshrelease/ci/tests /go/src/
     sleep 10
 
-    pushd /go/src/sonarqubetest
+    pushd /go/src
       go get github.com/DATA-DOG/godog/cmd/godog
       set -e
-      godog
+      godog -t @unit
     popd
