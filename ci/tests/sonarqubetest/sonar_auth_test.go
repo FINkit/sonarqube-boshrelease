@@ -79,7 +79,7 @@ func iAmAbleToLogin() error {
 
     defer resp.Body.Close()
 
-    if resp.StatusCode != 200 {
+    if resp.StatusCode != http.StatusOK {
         return fmt.Errorf("Login was unsuccessful. HTTP Status = %d", resp.StatusCode)
     }
 
@@ -98,7 +98,7 @@ func iAmUnableToLogin() error {
 
     defer resp.Body.Close()
 
-    if resp.StatusCode != 401 {
+    if resp.StatusCode != http.StatusUnauthorized {
         return fmt.Errorf("Login was successful and it should not have been. HTTP Status = %d", resp.StatusCode)
     }
 
