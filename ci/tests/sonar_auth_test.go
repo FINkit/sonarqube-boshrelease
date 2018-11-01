@@ -48,20 +48,20 @@ func loginToSonarqube(username, password string) (*http.Response, error) {
 }
 
 func iAccessTheLoginScreen() error {
-    resp, err := http.Get(sonarUrl)
-    if err != nil {
-        return err
-    }
+	resp, err := http.Get(sonarUrl)
+	if err != nil {
+		return err
+	}
 
-    defer resp.Body.Close()
-    body_bytes, err := ioutil.ReadAll(resp.Body)
+	defer resp.Body.Close()
+	body_bytes, err := ioutil.ReadAll(resp.Body)
 
-    if err != nil {
-        return err
-    }
+	if err != nil {
+		return err
+	}
 
-    body = string(body_bytes)
-    return nil
+	body = string(body_bytes)
+	return nil
 }
 
 func iAmAbleToLogin() error {
@@ -127,6 +127,6 @@ func FeatureContext(s *godog.Suite) {
 	s.Step(`^there is a sonarqube install$`, thereIsASonarqubeInstall)
 	s.Step(`^I access the login screen$`, iAccessTheLoginScreen)
 	s.Step(`^I am able to login$`, iAmAbleToLogin)
-    s.Step(`^I am unable to login$`, iAmUnableToLogin)
-    s.Step(`^I am presented with a Github login option$`, iAmPresentedWithAGithubLoginOption)
+	s.Step(`^I am unable to login$`, iAmUnableToLogin)
+	s.Step(`^I am presented with a Github login option$`, iAmPresentedWithAGithubLoginOption)
 }
