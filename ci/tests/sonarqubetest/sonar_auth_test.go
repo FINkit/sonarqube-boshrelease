@@ -26,17 +26,17 @@ const (
 )
 
 func getSonarEndPoint(path string) string {
-    sonarUrl = os.Getenv("SONARQUBE_HOST")
+    sonarUrl = os.Getenv("SONAR_URL")
 
     if sonarUrl == "" {
-        panic("SONARQUBE_HOST is empty")
+        panic("SONAR_URL is empty")
     }
 
     return sonarUrl + path
 }
 
 func thereIsASonarqubeInstall() error {
-    sonarUrl = os.Getenv("SONARQUBE_HOST")
+    sonarUrl = os.Getenv("SONAR_URL")
     return nil
 }
 
@@ -125,7 +125,6 @@ func iAmPresentedWithAGithubLoginOption() error {
     body = string(body_bytes)
 
     if !strings.Contains(body, "Log in with GitHub") {
-        //return fmt.Errorf("expected %s not to contain 'Log in with GitHub'",body)
         return fmt.Errorf("Expected response body to contain 'Log in with GitHub'")
     }
     return nil
