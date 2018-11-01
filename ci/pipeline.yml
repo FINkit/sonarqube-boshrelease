@@ -225,6 +225,7 @@ jobs:
     file: sonarqube-boshrelease/ci/tasks/test-sonarqube.yml
     params:
       BOSH_DEPLOYMENT: *deployment-name
+      TEST_STANDALONE_PASSWORD: ((test_user_password))
   <<: *slack-alert
 
 - name: release-final

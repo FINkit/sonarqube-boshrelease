@@ -30,5 +30,5 @@ run:
     pushd /go/src/sonarqubetest
       go get github.com/DATA-DOG/godog/cmd/godog
       set -e
-      godog
+      godog -t @unit
     popd
