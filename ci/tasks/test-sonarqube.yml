@@ -13,6 +13,8 @@ run:
   - |
     pushd bbl-state/bbl-state
       source <(bbl print-env)
+      TEST_STANDALONE_PASSWORD=$(credhub get --name /bosh-sonarqube-boshrelease/sonarqube/test_user_password | grep -e value | awk -F: '{print $2}'|awk '{ sub(/^[ \t]+/, ""); print }')
+      export TEST_STANDALONE_PASSWORD
       JUMPBOX_USER="jumpbox"; export JUMPBOX_USER
       JUMPBOX_HOST=$(bosh int <(bbl outputs) --path /jumpbox_url | cut -d: -f1); export JUMPBOX_HOST
       # set up jumpbox ssh tunnel
