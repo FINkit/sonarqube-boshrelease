@@ -29,7 +29,7 @@ run:
     cp -R sonarqube-boshrelease/ci/tests /go/src/
     sleep 10
 
-    pushd /go/src
+    pushd /go/src/tests
       go get github.com/DATA-DOG/godog/cmd/godog
       set -e
       godog -t @unit
