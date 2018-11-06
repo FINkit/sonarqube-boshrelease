@@ -21,7 +21,7 @@ const (
 	SONAR_AUTH_ENDPOINT            string = "/api/authentication/login"
 	SONAR_GITHUB_AUTH_ENDPOINT     string = "/sessions/new?return_to=%2Fprojects"
 	SONAR_TEST_STANDALONE_USER     string = "teststandaloneuser"
-	SONAR_TEST_STANDALONE_PASSWORD string = "TEST_STANDALONE_PASSWORD"
+	SONAR_TEST_STANDALONE_PASSWORD string = "SONAR_TEST_USER_PASSWORD"
 	SONAR_FAIL_TEST_PASSWORD       string = "iamafailureinlogins"
 )
 
